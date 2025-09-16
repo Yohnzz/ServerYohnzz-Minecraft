@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel + Spreadsheet Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        .info-text {
+            font-size: 18px;
+            color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+        }
+        .checkbox-cell {
+            text-align: center;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.4);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <i class="fas fa-user-shield fa-3x" style="color:#667eea;"></i>
+            </div>
+            <h1>Halo Admin!</h1>
+            <p class="info-text">Kamu adalah admin sekarang. Di bawah ini adalah data spreadsheet terbaru:</p>
+        </div>
+
+        <div class="card">
+            <table id="dataTable">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const spreadsheetId = '1wfDR53wWvcTQaR-MqwpfmjTVmVt6McictNLw-MthaKw';
+        const apiKey = 'AIzaSyADaFLuHPfWfLgHzi5XX9OOvdFYyV_rMj8';
+        const sheetName = 'Sheet2';
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbytgHj4k5Loyi39O-18hp-imE1PWMvRyOx1mVyjSlBct9r7YrqyhBuoekLBkF-UPts/exec';
+
+        const endpoint = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${apiKey}`;
+
+        function fetchData() {
+            fetch(endpoint)
+                .then(res => res.json())
+                .then(data => {
+                    const rows = data.values;
+                    const thead = document.querySelector("#dataTable thead");
+                    const tbody = document.querySelector("#dataTable tbody");
+                    thead.innerHTML = '';
+                    tbody.innerHTML = '';
+
+                    if (!rows || rows.length === 0) return;
+
+                    const statusColumnIndex = rows[0].findIndex(h => h.trim().toLowerCase() === 'status');
+
+                    const headerRow = document.createElement("tr");
+                    // headerRow.innerHTML = '<th>✔</th>';
+                    rows[0].forEach(header => {
+                        // const th = document.createElement("th");
+                        th.textContent = header;
+                        headerRow.appendChild(th);
+                    });
+                    thead.appendChild(headerRow);
+
+                    for (let i = 1; i < rows.length; i++) {
+                        const row = document.createElement("tr");
+
+                        const checkTd = document.createElement("td");
+                        // checkTd.classList.add("checkbox-cell");
+                        const checkbox = document.createElement("input");
+                        checkbox.style.fontWeight = "Bold";
+                        const statusValue = rows[i][statusColumnIndex] || '';
+                        checkbox.checked = statusValue.trim().toLowerCase() === 'selesai';
+                        checkbox.addEventListener('change', () => {
+                            const newStatus = checkbox.checked ? 'Selesai' : '';
+                            updateStatusInSheet(i + 1, statusColumnIndex + 1, newStatus);
+                        });
+                        // checkTd.appendChild(checkbox);
+                        // row.appendChild(checkTd);
+
+                        rows[i].forEach(cell => {
+                            const td = document.createElement("td");
+                            td.textContent = cell;
+                            td.style.fontWeight = "Bold";
+                            td.style.border = "10px solid #ccc";
+                            // td.setAttribute("style", "background: linear-gradient(135deg, #667eea, #764ba2); padding: 20px; color: white;");
+                            td.style.padding = "10px";
+                            td.style.textAlign = "center";
+                            td.style.maxWidth = "100px";
+                            row.appendChild(td);
+                        });
+                        tbody.appendChild(row);
+                    }
+                })
+                .catch(err => {
+                    console.error("Gagal mengambil data:", err);
+                });
+        }
+
+        function updateStatusInSheet(rowIndex, columnIndex, status) {
+            fetch(webAppUrl, {
+                method: 'POST',
+                body: JSON.stringify({ rowIndex, columnIndex, status }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.text())
+            .then(result => console.log("Update berhasil:", result))
+            .catch(err => console.error("Gagal update status:", err));
+        }
+
+        fetchData();
+        setInterval(fetchData, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Aternos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Styling kamu tetap dipakai, nggak diubah */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: rotate(45deg);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .logo {
+      margin-bottom: 25px;
+    }
+
+    .logo i {
+      font-size: 60px;
+      color: #667eea;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 25px;
+      font-size: 26px;
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(135deg, #764ba2, #667eea);
+      transition: all 0.4s ease;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      width: 100%;
+    }
+
+    .btn:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .notification {
+      display: none;
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 25px;
+      animation: fadeIn 0.5s ease;
+      position: relative;
+    }
+
+    .notification i {
+      margin-right: 10px;
+      font-size: 24px;
+      vertical-align: middle;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .back-button {
+      display: none;
+      background: linear-gradient(135deg, #2196F3, #0D47A1);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .back-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <div class="logo">
+      <i class="fas fa-server"></i>
+    </div>
+    <h1>Nama Akun Aternosmu?</h1>
+
+    <!-- GANTI entry.xxx dengan ID field form kamu -->
+    <form name="submit-to-google-sheet">
+  <input class="form-group" name="nama" type="text" maxlength="14" placeholder="Masukkan nama Aternos" required />
+  <button class="btn" type="submit">Kirim</button>
+</form>
+
+    <div id="notification" class="notification">
+      <i class="fas fa-check-circle"></i>
+      <span>Nama Anda sudah dikirim ke Admin, silahkan tunggu</span>
+    </div>
+
+    <button id="backButton" class="back-button">
+      <i class="fas fa-home"></i> Kembali ke Beranda
+    </button>
+
+    <!-- iframe hidden buat proses submit -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+  </div>
+</div>
+
+<script>
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbytgHj4k5Loyi39O-18hp-imE1PWMvRyOx1mVyjSlBct9r7YrqyhBuoekLBkF-UPts/exec'; // ganti pakai link Web App kamu
+  const form = document.forms['submit-to-google-sheet'];
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        document.getElementById("notification").style.display = "block";
+        document.getElementById("backButton").style.display = "inline-block";
+        form.style.display = "none";
+      })
+      .catch(error => console.error('Error!', error.message));
+  });
+
+
+  let formSubmitted = false;
+
+  window.addEventListener("load", () => {
+    const form = document.querySelector("form");
+    const notif = document.getElementById("notification");
+    const backBtn = document.getElementById("backButton");
+
+    form.addEventListener("submit", function () {
+      setTimeout(() => {
+        if (formSubmitted) {
+
+          notif.style.display = "block";
+          backBtn.style.display = "inline-block";
+          form.style.display = "none";
+        }
+      }, 1000);
+    });
+  });
+
+  document.getElementById("backButton").addEventListener("click", function () {
+  window.location.href = "index.html"; // ganti nama file sesuai kebutuhan
+});
+
+</script>
+
+</body>
+</html>
