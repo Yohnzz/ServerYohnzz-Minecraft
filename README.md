@@ -40,7 +40,7 @@
 - Responsive & mobile-friendly.  
 
 <p align="center">
-  <img src="assets/preview.png" alt="Preview UI" width="600">
+  <img src="./images/ssan.png" alt="Preview UI" width="600">
 </p>
 
 ---
