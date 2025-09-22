@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://yohnzz-server.netlify.app/" target="_blank"<img src="./images/oihoihoi.png" alt="Minecraft Panel Banner" width="100%" /> </a>
+  <a href="https://yohnzz-server.netlify.app/" target="_blank"><img src="./images/oihoihoi.png" alt="Minecraft Panel Banner" width="100%" /> </a>
 </p>
 
 <h1 align="center">🌐 Minecraft Server Web Panel</h1>
