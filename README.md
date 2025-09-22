@@ -60,7 +60,7 @@
 
 ## 📬 Connect
 <p align="center">
-  <a href="https://instagram.com/yourusername"><img src="https://img.shields.io/badge/Instagram-red?style=for-the-badge&logo=instagram&logoColor=white"></a>
-  <a href="https://youtube.com/@yourchannel"><img src="https://img.shields.io/badge/YouTube-darkred?style=for-the-badge&logo=youtube&logoColor=white"></a>
+  <a href="https://instagram.com/ignasiusmario05"><img src="https://img.shields.io/badge/Instagram-red?style=for-the-badge&logo=instagram&logoColor=white"></a>
+  <a href="https://www.youtube.com/@Yohnkce"><img src="https://img.shields.io/badge/YouTube-darkred?style=for-the-badge&logo=youtube&logoColor=white"></a>
   <a href="mailto:yohnzz@example.com"><img src="https://img.shields.io/badge/Email-green?style=for-the-badge&logo=gmail&logoColor=white"></a>
 </p>
